@@ -35,7 +35,7 @@ def get_json_from_url(url_input):
 
 def build_url_with_symbol(symbol):
     return "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=%s" \
-           "&apikey=5ZZAGO8AS4V9XCXD" % symbol
+           "&apikey=5ZZAGO8AS4V9XCXD&outputsize=full" % symbol
 
 
 if __name__ == "__main__":
