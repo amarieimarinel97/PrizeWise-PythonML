@@ -34,10 +34,19 @@ class RegressionService(object):
         # df = stock_utils.process_json_to_pd(stock_json)
         # df = df[:1000]
         df = stock_utils.process_json_to_pd_with_limit(stock_json, 1000)
-
         avg_pred, stock_history = regression.predict_stock_with_multiple_regressors(df, days)
+
+        stock_with_history = list(stock_history)
+        stock_with_history.extend(avg_pred)
+        deviation = regression.compute_vertical_deviation(regression.get_median_line(stock_with_history),
+                                                          stock_with_history)
+        print(deviation[len(deviation) // 2:])
         print(avg_pred)
-        return json.dumps(avg_pred, cls=NumpyArrayEncoder)
+        response = {
+            'prediction': avg_pred.tolist(),
+            'deviation': deviation
+        }
+        return json.dumps(response, indent=2)
 
 
 if __name__ == '__main__':

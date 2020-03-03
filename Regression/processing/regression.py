@@ -8,7 +8,7 @@ from sklearn.linear_model import BayesianRidge
 from sklearn.linear_model import ElasticNet
 import processing.stock_utils as stock_utils
 
-no_of_days_to_predict = 20
+no_of_days_to_predict = 15
 
 
 class Predictions_Manager:
@@ -63,7 +63,13 @@ class Predictions_Manager:
 
         if include_present_day:
             plt.axvline(x=days - 1, ymin=0, ymax=2500)
-        stock_utils.header("Plot legend")
+
+        bottom_lim, top_lim = plt.ylim()
+        middle = (bottom_lim + top_lim) / 2
+        bottom_lim -= 1.5*(middle - bottom_lim)
+        top_lim += 1.5*(top_lim - middle)
+        plt.ylim(bottom_lim, top_lim)
+
         plt.xlabel('Next days')
         plt.ylabel('USD')
         # plt.show()
@@ -102,7 +108,7 @@ def predict_stock_with_multiple_regressors(df, days):
     en.fit(X_train, y_train)
     en_conf = en.score(X_test, y_test)
     en_prediction = en.predict(stock_history_for_prediction)
-    pred_manager.add_prediction(en_prediction, "Elastic Net", en_conf)
+    # pred_manager.add_prediction(en_prediction, "Elastic Net", en_conf)
 
     ard = ARDRegression()
     ard.fit(X_train, y_train)
@@ -119,10 +125,7 @@ def predict_stock_with_multiple_regressors(df, days):
     median_line = get_median_line(stock_with_history)
     pred_manager.plot_all_predictions(days=days,
                                       history=stock_history_to_plot,
-                                      median_line_points=
-                                      [[0, stock_with_history[0] + median_line[0]],
-                                       [len(median_line) - 1,
-                                        stock_with_history[len(median_line) - 1] + median_line[len(median_line) - 1]]]
+                                      median_line_points=median_line
                                       )
 
     return average_prediction, stock_history_to_plot
@@ -147,8 +150,8 @@ def compute_vertical_deviation(line, input_array):
     for i in range(0, len(input_array)):
         projection = get_vertical_projection_of_point_on_line(p1, p2, [i, input_array[i]])
         absolute_deviation = input_array[i] - projection
-        # percent_deviation = absolute_deviation * 100 / projection
-        result.append(absolute_deviation)
+        percent_deviation = absolute_deviation * 100 / projection
+        result.append(percent_deviation)
     return result
 
 
@@ -166,7 +169,6 @@ def get_median_line(input_array):
             end_point[1] -= 0.01 * end_point[1]
             deviation = compute_vertical_deviation([start_point, end_point], input_array)
             current_sign_of_elements = sum(deviation)
-            print("Semn: ",current_sign_of_elements)
 
     else:
         while current_sign_of_elements > 0:
@@ -174,9 +176,7 @@ def get_median_line(input_array):
             end_point[1] += 0.01 * end_point[1]
             deviation = compute_vertical_deviation([start_point, end_point], input_array)
             current_sign_of_elements = sum(deviation)
-            print("Semn: ",current_sign_of_elements)
-    print("Deviation: ",deviation)
-    return deviation
+    return [start_point, end_point]
 
 
 if __name__ == "__main__":
@@ -190,9 +190,7 @@ if __name__ == "__main__":
     stock_with_history = list(stock_history)
     stock_with_history.extend(avg_pred)
 
-    p1 = [0, stock_with_history[0]]
-    p2 = [len(stock_with_history) - 1, stock_with_history[len(stock_with_history) - 1]]
-    # get_median_line(stock_with_history)
+    deviation = compute_vertical_deviation(get_median_line(stock_with_history), stock_with_history)
+    print(deviation[len(deviation)//2:])
 
     plt.show()
-    # compute_vertical_deviation([p1,p2], stock_with_history)
