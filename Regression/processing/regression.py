@@ -1,13 +1,14 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+from numpy.dual import norm
 from sklearn.linear_model import LinearRegression, ARDRegression
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import BayesianRidge
 from sklearn.linear_model import ElasticNet
 import processing.stock_utils as stock_utils
 
-no_of_days_to_predict = 30
+no_of_days_to_predict = 20
 
 
 class Predictions_Manager:
@@ -30,7 +31,8 @@ class Predictions_Manager:
         data = np.average(data, axis=0)
         return data
 
-    def plot_all_predictions(self, days, history=None, include_average=True, include_present_day=True):
+    def plot_all_predictions(self, days, history=None, include_average=True, include_present_day=True,
+                             median_line_points=None):
         colors = ['red', 'blue', 'green', 'pink', 'purple', 'orange', 'black']
 
         caption_text = ""
@@ -44,23 +46,32 @@ class Predictions_Manager:
             caption_text += (self._predictions_models[i] + " - " + colors[i % len(self._predictions_models)] + "\n")
 
         if include_average:
+            average_prediction = self.get_average_prediction()
             if history is not None:
                 prediction_with_history = list(history)
-                prediction_with_history.extend(self.get_average_prediction())
+                prediction_with_history.extend(average_prediction)
                 plt.plot(prediction_with_history, 'black')
             else:
-                plt.plot(self.get_average_prediction(), 'black')
-            caption_text += ('Average - black\n')
+                plt.plot(average_prediction, 'black')
+
+            caption_text += 'Average - black\n'
+            if median_line_points is not None:
+                x_values = [median_line_points[0][0], median_line_points[1][0]]
+                y_values = [median_line_points[0][1], median_line_points[1][1]]
+                print(x_values, y_values)
+                plt.plot(x_values, y_values)
+
         if include_present_day:
             plt.axvline(x=days - 1, ymin=0, ymax=2500)
         stock_utils.header("Plot legend")
-        print(caption_text)
         plt.xlabel('Next days')
         plt.ylabel('USD')
-        plt.show()
+        # plt.show()
 
 
 def predict_stock_with_multiple_regressors(df, days):
+    global no_of_days_to_predict
+    no_of_days_to_predict = days
     pred_manager = Predictions_Manager()
     df = df.drop(['timestamp'], 1)
     df['Prediction'] = df[['close']].shift(-days)
@@ -101,8 +112,71 @@ def predict_stock_with_multiple_regressors(df, days):
 
     stock_history_to_plot = np.flip(pd.to_numeric(df['close'][:days], errors='coerce'), 0)
 
-    # pred_manager.plot_all_predictions(days=days,history=stock_history_to_plot)
-    return pred_manager.get_average_prediction(), stock_history_to_plot
+    average_prediction = pred_manager.get_average_prediction()
+
+    stock_with_history = list(stock_history_to_plot)
+    stock_with_history.extend(average_prediction)
+    median_line = get_median_line(stock_with_history)
+    pred_manager.plot_all_predictions(days=days,
+                                      history=stock_history_to_plot,
+                                      median_line_points=
+                                      [[0, stock_with_history[0] + median_line[0]],
+                                       [len(median_line) - 1,
+                                        stock_with_history[len(median_line) - 1] + median_line[len(median_line) - 1]]]
+                                      )
+
+    return average_prediction, stock_history_to_plot
+
+
+def get_vertical_projection_of_point_on_line(p1, p2, point):
+    yA = p1[1]
+    yB = p2[1]
+    xA = p1[0]
+    xB = p2[0]
+    xC = point[0]
+    m = (yB - yA) / (xB - xA)
+    yC = m * (xC - xA) + yA
+    return yC
+
+
+def compute_vertical_deviation(line, input_array):
+    p1 = line[0]
+    p2 = line[1]
+
+    result = []
+    for i in range(0, len(input_array)):
+        projection = get_vertical_projection_of_point_on_line(p1, p2, [i, input_array[i]])
+        absolute_deviation = input_array[i] - projection
+        # percent_deviation = absolute_deviation * 100 / projection
+        result.append(absolute_deviation)
+    return result
+
+
+def get_median_line(input_array):
+    no_of_elem = len(input_array)
+
+    start_point = [0, input_array[0]]
+    end_point = [len(input_array) - 1, input_array[len(input_array) - 1]]
+    deviation = compute_vertical_deviation([start_point, end_point], input_array)
+    current_sign_of_elements = sum(deviation)
+
+    if current_sign_of_elements < 0:
+        while current_sign_of_elements < 0:
+            start_point[1] -= 0.01 * start_point[1]
+            end_point[1] -= 0.01 * end_point[1]
+            deviation = compute_vertical_deviation([start_point, end_point], input_array)
+            current_sign_of_elements = sum(deviation)
+            print("Semn: ",current_sign_of_elements)
+
+    else:
+        while current_sign_of_elements > 0:
+            start_point[1] += 0.01 * start_point[1]
+            end_point[1] += 0.01 * end_point[1]
+            deviation = compute_vertical_deviation([start_point, end_point], input_array)
+            current_sign_of_elements = sum(deviation)
+            print("Semn: ",current_sign_of_elements)
+    print("Deviation: ",deviation)
+    return deviation
 
 
 if __name__ == "__main__":
@@ -112,3 +186,13 @@ if __name__ == "__main__":
     df = df[:1000]
 
     avg_pred, stock_history = predict_stock_with_multiple_regressors(df, no_of_days_to_predict)
+
+    stock_with_history = list(stock_history)
+    stock_with_history.extend(avg_pred)
+
+    p1 = [0, stock_with_history[0]]
+    p2 = [len(stock_with_history) - 1, stock_with_history[len(stock_with_history) - 1]]
+    # get_median_line(stock_with_history)
+
+    plt.show()
+    # compute_vertical_deviation([p1,p2], stock_with_history)
