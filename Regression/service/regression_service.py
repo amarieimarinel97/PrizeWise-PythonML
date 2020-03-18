@@ -31,24 +31,21 @@ class RegressionService(object):
             print("Number of days not inserted")
 
         stock_json = stock_utils.get_json_from_url(url)
-        # df = stock_utils.process_json_to_pd(stock_json)
-        # df = df[:1000]
         df = stock_utils.process_json_to_pd_with_limit(stock_json, 1000)
+
         avg_pred, stock_history = regression.predict_stock_with_multiple_regressors(df, days)
 
-        stock_with_history = list(stock_history)
-        stock_with_history.extend(avg_pred)
-        deviation = regression.compute_vertical_deviation(regression.get_median_line(stock_with_history),
-                                                          stock_with_history)
-        print(deviation[len(deviation) // 2:])
-        print(avg_pred)
+        pred_with_present_day = [stock_history[0]] + avg_pred
+        deviation = regression.compute_vertical_deviation(regression.get_start_and_end_point(pred_with_present_day), pred_with_present_day)
         response = {
-            'prediction': avg_pred.tolist(),
-            'deviation': deviation
+            "prediction": pred_with_present_day,
+            "changes": regression.compute_percentage_changes(pred_with_present_day),
+            "deviation": deviation
         }
-        return json.dumps(response, indent=2)
+        return response
+
 
 
 if __name__ == '__main__':
-    cherrypy.server.socket_host = '127.0.0.3'
+    cherrypy.server.socket_host = '127.0.0.2'
     cherrypy.quickstart(RegressionService())

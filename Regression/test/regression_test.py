@@ -7,7 +7,7 @@ from sklearn.model_selection import train_test_split
 
 import processing.stock_utils as stock_utils
 
-no_of_days_to_predict = 30
+no_of_days_to_predict = 5
 
 
 class Predictions_Manager:
@@ -78,9 +78,9 @@ def predict_stock_with_multiple_regressors(df, days):
     global no_of_days_to_predict
     no_of_days_to_predict = days
     pred_manager = Predictions_Manager()
-    df = df.drop(['timestamp'], 1)
+    df = df.drop(['timestamp', 'vol'], 1)
     df['Prediction'] = df[['close']].shift(-days)
-    X = np.array(df.drop(['Prediction', 'close'], 1))
+    X = np.array(df.drop(['Prediction'], 1))
     X = X[:-days]
 
     y = np.array(df['Prediction'])
@@ -89,8 +89,8 @@ def predict_stock_with_multiple_regressors(df, days):
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.2)
 
-    stock_history_for_prediction = np.array(df.drop(['Prediction', 'close'], 1))[:days * 10]
-    stock_utils.header("STOCK HISTORY FOR PRED %s" % stock_history_for_prediction)
+    stock_history_for_prediction = np.array(df.drop(['Prediction'], 1))[:days]
+    # stock_utils.header("STOCK HISTORY FOR PRED %s"%stock_history_for_prediction)
 
     lin_reg = LinearRegression()
     lin_reg.fit(X_train, y_train)
@@ -148,12 +148,6 @@ def compute_vertical_deviation(line, input_array):
         result.append(percent_deviation)
     return result
 
-def compute_percentage_changes(input_array):
-    result = [0]
-    for i in range(1, len(input_array)):
-        result.append((input_array[i]-input_array[i-1])/input_array[i-1]*100)
-    return result
-
 
 def get_median_line(input_array):
     no_of_elem = len(input_array)
@@ -185,16 +179,50 @@ def get_start_and_end_point(input_array):
     return [start_point, end_point]
 
 
+def listToString(s):
+    str1 = ""
+    for ele in s:
+        str1 += str(ele) + ", "
+
+    return str1
+
+
+def computeError(df, pred):
+    sum = 0.0
+    errors = list()
+    for i in range(1, len(pred)):
+        error = 100*(abs(1 - float(df.iloc[no_of_days_to_predict - i]['close']) / pred[i]))
+        sum += error
+        errors.append(error)
+
+    sum = sum / (len(pred) - 1)
+
+    return sum, errors
+
+
 if __name__ == "__main__":
-    url = stock_utils.build_url_with_symbol('AMZN')
+    symbol = 'AAPL'
+    url = stock_utils.build_url_with_symbol(symbol)
     stock_json = stock_utils.get_json_from_url(url)
     df = stock_utils.process_json_to_pd_with_limit(stock_json, 1000)
+    # print(df.head(50))
+    df2 = df[25:]
+    # print("--------------------\n", df2.head(50))
 
-    avg_pred, stock_history = predict_stock_with_multiple_regressors(df, no_of_days_to_predict)
-    pred_with_present_day = [stock_history[0]] + avg_pred
+    avg_pred, stock_history = predict_stock_with_multiple_regressors(df2, no_of_days_to_predict)
+    pred_with_present_day = [stock_history.tolist()[len(stock_history) - 1]] + avg_pred
     print(pred_with_present_day)
     print(compute_vertical_deviation(get_start_and_end_point(pred_with_present_day), pred_with_present_day))
     # deviation = compute_vertical_deviation(get_median_line(stock_with_history), stock_with_history)
     # print(deviation[len(deviation)//2:])
+    sum, errors = computeError(df[25 - no_of_days_to_predict:26], pred_with_present_day)
 
+    f = open("prediction_test.txt", "a")
+    company = '\n\n'+symbol+'\n'
+    real = "Real: \n" + str(df[0:30])
+    prediction = "\nClose prediction: \n" + listToString(pred_with_present_day)
+    errors = "\nErrors: " + listToString(errors)
+    avg_error = "\nAvg error: " + str(sum)
+    f.write(company + real + prediction + errors + avg_error)
+    f.close()
     plt.show()

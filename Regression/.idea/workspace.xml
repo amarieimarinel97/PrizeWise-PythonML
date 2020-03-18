@@ -4,6 +4,7 @@
     <list default="true" id="d94facc3-764c-47a8-8c9a-f7e322cf670e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/processing/regression.py" beforeDir="false" afterPath="$PROJECT_DIR$/processing/regression.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/processing/stock_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/processing/stock_utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service/regression_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/service/regression_service.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -29,9 +30,10 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../Python" />
   </component>
   <component name="RunManager" selected="Python.regression_service">
     <configuration name="regression" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
@@ -78,9 +80,32 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="regression_test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Regression" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test/regression_test.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Python.regression_service" />
+        <item itemvalue="Python.regression_test" />
         <item itemvalue="Python.regression" />
       </list>
     </recent_temporary>
@@ -100,7 +125,10 @@
       <workItem from="1583160066676" duration="2827000" />
       <workItem from="1583163139789" duration="14000" />
       <workItem from="1583223921161" duration="9727000" />
-      <workItem from="1583240337360" duration="2121000" />
+      <workItem from="1583240337360" duration="2198000" />
+      <workItem from="1583307375459" duration="10721000" />
+      <workItem from="1583918183283" duration="11435000" />
+      <workItem from="1584088189681" duration="8580000" />
     </task>
     <servers />
   </component>
@@ -112,25 +140,50 @@
       <screen x="0" y="0" width="1676" height="902" />
     </state>
     <state x="603" y="253" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1676.902@0.0.1676.902" timestamp="1582899751318" />
-    <state width="1632" height="267" key="GridCell.Tab.0.bottom" timestamp="1583242369935">
+    <state x="617" y="205" key="FileChooserDialogImpl" timestamp="1583314953636">
       <screen x="0" y="0" width="1676" height="902" />
     </state>
-    <state width="1632" height="267" key="GridCell.Tab.0.bottom/0.0.1676.902@0.0.1676.902" timestamp="1583242369935" />
-    <state width="1632" height="267" key="GridCell.Tab.0.center" timestamp="1583242369934">
+    <state x="617" y="205" key="FileChooserDialogImpl/0.0.1676.902@0.0.1676.902" timestamp="1583314953636" />
+    <state width="792" height="284" key="GridCell.Tab.0.bottom" timestamp="1584112233355">
       <screen x="0" y="0" width="1676" height="902" />
     </state>
-    <state width="1632" height="267" key="GridCell.Tab.0.center/0.0.1676.902@0.0.1676.902" timestamp="1583242369934" />
-    <state width="1632" height="267" key="GridCell.Tab.0.left" timestamp="1583242369934">
+    <state width="792" height="284" key="GridCell.Tab.0.bottom/0.0.1676.902@0.0.1676.902" timestamp="1584112233355" />
+    <state width="792" height="284" key="GridCell.Tab.0.center" timestamp="1584112233355">
       <screen x="0" y="0" width="1676" height="902" />
     </state>
-    <state width="1632" height="267" key="GridCell.Tab.0.left/0.0.1676.902@0.0.1676.902" timestamp="1583242369934" />
-    <state width="1632" height="267" key="GridCell.Tab.0.right" timestamp="1583242369935">
+    <state width="792" height="284" key="GridCell.Tab.0.center/0.0.1676.902@0.0.1676.902" timestamp="1584112233355" />
+    <state width="792" height="284" key="GridCell.Tab.0.left" timestamp="1584112233355">
       <screen x="0" y="0" width="1676" height="902" />
     </state>
-    <state width="1632" height="267" key="GridCell.Tab.0.right/0.0.1676.902@0.0.1676.902" timestamp="1583242369935" />
+    <state width="792" height="284" key="GridCell.Tab.0.left/0.0.1676.902@0.0.1676.902" timestamp="1584112233355" />
+    <state width="792" height="284" key="GridCell.Tab.0.right" timestamp="1584112233355">
+      <screen x="0" y="0" width="1676" height="902" />
+    </state>
+    <state width="792" height="284" key="GridCell.Tab.0.right/0.0.1676.902@0.0.1676.902" timestamp="1584112233355" />
+    <state width="1632" height="207" key="GridCell.Tab.1.bottom" timestamp="1584022798080">
+      <screen x="0" y="0" width="1676" height="902" />
+    </state>
+    <state width="1632" height="207" key="GridCell.Tab.1.bottom/0.0.1676.902@0.0.1676.902" timestamp="1584022798080" />
+    <state width="1632" height="207" key="GridCell.Tab.1.center" timestamp="1584022798079">
+      <screen x="0" y="0" width="1676" height="902" />
+    </state>
+    <state width="1632" height="207" key="GridCell.Tab.1.center/0.0.1676.902@0.0.1676.902" timestamp="1584022798079" />
+    <state width="1632" height="207" key="GridCell.Tab.1.left" timestamp="1584022798079">
+      <screen x="0" y="0" width="1676" height="902" />
+    </state>
+    <state width="1632" height="207" key="GridCell.Tab.1.left/0.0.1676.902@0.0.1676.902" timestamp="1584022798079" />
+    <state width="1632" height="207" key="GridCell.Tab.1.right" timestamp="1584022798080">
+      <screen x="0" y="0" width="1676" height="902" />
+    </state>
+    <state width="1632" height="207" key="GridCell.Tab.1.right/0.0.1676.902@0.0.1676.902" timestamp="1584022798080" />
+    <state x="536" y="48" width="602" height="804" key="find.popup" timestamp="1583918220796">
+      <screen x="0" y="0" width="1676" height="902" />
+    </state>
+    <state x="536" y="48" width="602" height="804" key="find.popup/0.0.1676.902@0.0.1676.902" timestamp="1583918220796" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Regression$regression.coverage" NAME="regression Coverage Results" MODIFIED="1583242160157" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/processing" />
-    <SUITE FILE_PATH="coverage/Regression$regression_service.coverage" NAME="regression_service Coverage Results" MODIFIED="1583242369927" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service" />
+    <SUITE FILE_PATH="coverage/Regression$regression.coverage" NAME="regression Coverage Results" MODIFIED="1583313750693" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/processing" />
+    <SUITE FILE_PATH="coverage/Regression$regression_test.coverage" NAME="regression_test Coverage Results" MODIFIED="1584090114671" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
+    <SUITE FILE_PATH="coverage/Regression$regression_service.coverage" NAME="regression_service Coverage Results" MODIFIED="1584111479647" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service" />
   </component>
 </project>

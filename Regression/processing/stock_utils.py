@@ -35,7 +35,7 @@ def process_json_to_pd_with_limit(json_data, limit):
         curr_row_counter += 1
         if curr_row_counter >= limit:
             break
-    index = [i for i in range(0, limit)]
+    index = [i for i in range(0, min(limit, curr_row_counter))]
     columns = ['timestamp', 'open', 'high', 'low', 'close', 'vol']
     return pd.DataFrame(info_list, index, columns)
 
