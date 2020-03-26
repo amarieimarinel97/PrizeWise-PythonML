@@ -102,14 +102,14 @@ def get_max_and_min_predictions():
     print("max = ", max, "\nmin = ", min)
 
 
-def init_module():
+def init_module(model_name=None):
     global model
     initialize_gpus()
     load_encodedimdb_dataset()
     load_imdb_dataset()
-    # model = tf.keras.models.load_model("C:\\Users\\Marinel\\Desktop\\Licenta\\PythonAlgorithm\\Regression\\processing\\1-dense_1-dropout_32-size_1585134921")
-    model = tf.keras.models.load_model(
-        "C:\\Users\\Marinel\\Desktop\\Licenta\\Experimenting\\Regression\\processing\\1-lstm_32-nodes_1-dense_1585146094.h5")
+    if model_name is None:
+        model_name = "../models/1-lstm_32-nodes_2-dense_1585211592.h5"
+    model = tf.keras.models.load_model(model_name)
     print(model.summary())
 
 

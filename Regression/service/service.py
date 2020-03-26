@@ -46,8 +46,8 @@ class RegressionService(object):
             # for pred in sa.model.predict(request_body['text']):
             #     result.append(float(pred[0]))
             for text in request_body['text']:
-                result.append(  sa.pad_predict_sample(text, False)  )
-            response ={
+                result.append(sa.pad_predict_sample(text, False))
+            response = {
                 "sentiment_analysis": result
             }
         else:
@@ -61,5 +61,7 @@ class RegressionService(object):
 
 if __name__ == '__main__':
     sa.init_module()
-    cherrypy.server.socket_host = '127.0.0.2'
+    # cherrypy.server.socket_host = '127.0.0.2'
+    cherrypy.server.socket_port = 8081
+
     cherrypy.quickstart(RegressionService())
