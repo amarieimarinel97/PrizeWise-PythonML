@@ -57,7 +57,7 @@ class Predictions_Manager:
             if median_line_points is not None:
                 x_values = [median_line_points[0][0], median_line_points[1][0]]
                 y_values = [median_line_points[0][1], median_line_points[1][1]]
-                print(x_values, y_values)
+                # print(x_values, y_values)
                 plt.plot(x_values, y_values)
 
         if include_present_day:
@@ -90,7 +90,6 @@ def predict_stock_with_multiple_regressors(df, days):
         X, y, test_size=0.2)
 
     stock_history_for_prediction = np.array(df.drop(['Prediction', 'close'], 1))[:days * 10]
-    stock_utils.header("STOCK HISTORY FOR PRED %s" % stock_history_for_prediction)
 
     lin_reg = LinearRegression()
     lin_reg.fit(X_train, y_train)
@@ -98,17 +97,17 @@ def predict_stock_with_multiple_regressors(df, days):
     lr_prediction = lin_reg.predict(stock_history_for_prediction[:days])
     pred_manager.add_prediction(lr_prediction, "Linear regression", lin_reg_conf)
 
-    br = BayesianRidge()
-    br.fit(X_train, y_train)
-    br_conf = br.score(X_test, y_test)
-    br_prediction = br.predict(stock_history_for_prediction[:days])
-    pred_manager.add_prediction(br_prediction, "Bayesian Ridge", br_conf)
-
-    ard = ARDRegression()
-    ard.fit(X_train, y_train)
-    ard_conf = ard.score(X_test, y_test)
-    ard_prediction = ard.predict(stock_history_for_prediction[:days])
-    pred_manager.add_prediction(ard_prediction, "ARD Regression", ard_conf)
+    # br = BayesianRidge()
+    # br.fit(X_train, y_train)
+    # br_conf = br.score(X_test, y_test)
+    # br_prediction = br.predict(stock_history_for_prediction[:days])
+    # pred_manager.add_prediction(br_prediction, "Bayesian Ridge", br_conf)
+    #
+    # ard = ARDRegression()
+    # ard.fit(X_train, y_train)
+    # ard_conf = ard.score(X_test, y_test)
+    # ard_prediction = ard.predict(stock_history_for_prediction[:days])
+    # pred_manager.add_prediction(ard_prediction, "ARD Regression", ard_conf)
 
     stock_history_to_plot = np.flip(pd.to_numeric(df['close'][:days], errors='coerce'), 0)
 

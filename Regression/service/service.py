@@ -1,9 +1,10 @@
 import cherrypy
-
+import tensorflow as tf
 import json
 import processing.regression as regr
 import processing.stock_utils as su
 import processing.sentiment_analysis as sa
+import numpy
 
 
 class RegressionService(object):
@@ -41,19 +42,29 @@ class RegressionService(object):
     @cherrypy.tools.json_in()
     def get_sentiment_analysis(self):
         request_body = cherrypy.request.json
+        print("Received this: ", request_body)
         if isinstance(request_body['text'], list):
             result = []
             # for pred in sa.model.predict(request_body['text']):
             #     result.append(float(pred[0]))
-            for text in request_body['text']:
-                result.append(sa.pad_predict_sample(text, False))
+            text = request_body['text']
+            for ind in tf.range(len(text)):
+                prediction = sa.pad_predict_sample(text[ind], True)
+                # print("Prediction: ", prediction, " | for: ", text[ind])
+                result.append(prediction)
             response = {
                 "sentiment_analysis": result
             }
         else:
-            result = sa.predict_sample(request_body['text'])
+            result = []
+            text = request_body['text'].split("|")
+            for ind in tf.range(len(text)):
+                prediction = sa.pad_predict_sample(text[ind], True)
+                # print("Prediction: ", prediction, " | for: ", text[ind])
+                result.append(prediction)
+            result = numpy.mean(result)
             response = {
-                "sentiment_analysis": float(result[0][0])
+                "sentiment_analysis": result
             }
 
         return response
