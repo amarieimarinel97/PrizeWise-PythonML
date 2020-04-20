@@ -25,7 +25,7 @@ class RegressionService(object):
         stock_json = su.get_json_from_url(url)
         df = su.process_json_to_pd_with_limit(stock_json, 1000)
 
-        avg_pred, stock_history = regr.predict_stock_with_multiple_regressors(df, days)
+        avg_pred, stock_history = regr.train_regression_model(df, days)
 
         pred_with_present_day = [stock_history[0]] + avg_pred
         deviation = regr.compute_vertical_deviation(regr.get_start_and_end_point(pred_with_present_day),

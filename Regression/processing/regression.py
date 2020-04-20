@@ -9,6 +9,9 @@ import processing.stock_utils as stock_utils
 
 no_of_days_to_predict = 30
 
+model = None
+model_confidence = None
+
 
 class Predictions_Manager:
     _predictions_models = []
@@ -74,10 +77,8 @@ class Predictions_Manager:
         # plt.show()
 
 
-def predict_stock_with_multiple_regressors(df, days):
-    global no_of_days_to_predict
-    no_of_days_to_predict = days
-    pred_manager = Predictions_Manager()
+def train_regression_model(df, days):
+    global model
     df = df.drop(['timestamp'], 1)
     df['Prediction'] = df[['close']].shift(-days)
     X = np.array(df.drop(['Prediction', 'close'], 1))
@@ -89,39 +90,22 @@ def predict_stock_with_multiple_regressors(df, days):
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.2)
 
-    stock_history_for_prediction = np.array(df.drop(['Prediction', 'close'], 1))[:days * 10]
+    model = LinearRegression()
+    model.fit(X_train, y_train)
+    return model.score(X_test, y_test)
 
-    lin_reg = LinearRegression()
-    lin_reg.fit(X_train, y_train)
-    lin_reg_conf = lin_reg.score(X_test, y_test)
-    lr_prediction = lin_reg.predict(stock_history_for_prediction[:days])
-    pred_manager.add_prediction(lr_prediction, "Linear regression", lin_reg_conf)
 
-    # br = BayesianRidge()
-    # br.fit(X_train, y_train)
-    # br_conf = br.score(X_test, y_test)
-    # br_prediction = br.predict(stock_history_for_prediction[:days])
-    # pred_manager.add_prediction(br_prediction, "Bayesian Ridge", br_conf)
-    #
-    # ard = ARDRegression()
-    # ard.fit(X_train, y_train)
-    # ard_conf = ard.score(X_test, y_test)
-    # ard_prediction = ard.predict(stock_history_for_prediction[:days])
-    # pred_manager.add_prediction(ard_prediction, "ARD Regression", ard_conf)
+def get_regression_prediction(df, days):
+    global no_of_days_to_predict, model
+    no_of_days_to_predict = days
+    df = df.drop(['timestamp'], 1)
 
+    stock_history_for_prediction = np.array(df.drop(['close'], 1))[:days * 10]
+    lr_prediction = model.predict(stock_history_for_prediction[:days])
+    print("PRECITION :\n",lr_prediction)
     stock_history_to_plot = np.flip(pd.to_numeric(df['close'][:days], errors='coerce'), 0)
 
-    average_prediction = pred_manager.get_average_prediction()
-
-    # stock_with_history = list(stock_history_to_plot)
-    # stock_with_history.extend(average_prediction)
-    # median_line = get_median_line(stock_with_history)
-    # pred_manager.plot_all_predictions(days=days,
-    #                                   history=stock_history_to_plot,
-    #                                   median_line_points=median_line
-    #                                   )
-
-    return average_prediction, stock_history_to_plot
+    return lr_prediction, stock_history_to_plot
 
 
 def get_vertical_projection_of_point_on_line(p1, p2, point):
@@ -147,10 +131,11 @@ def compute_vertical_deviation(line, input_array):
         result.append(percent_deviation)
     return result
 
+
 def compute_percentage_changes(input_array):
     result = [0]
     for i in range(1, len(input_array)):
-        result.append((input_array[i]-input_array[i-1])/input_array[i-1]*100)
+        result.append((input_array[i] - input_array[i - 1]) / input_array[i - 1] * 100)
     return result
 
 
@@ -184,13 +169,25 @@ def get_start_and_end_point(input_array):
     return [start_point, end_point]
 
 
-if __name__ == "__main__":
-    url = stock_utils.build_url_with_symbol('AMZN')
+def get_history_of_stock(symbol, limit=1000, full_size=True):
+    url = stock_utils.build_url_with_symbol(symbol, full_size)
     stock_json = stock_utils.get_json_from_url(url)
-    df = stock_utils.process_json_to_pd_with_limit(stock_json, 1000)
+    if limit is None or limit == 0:
+        return stock_utils.process_json_to_pd(stock_json)
+    return stock_utils.process_json_to_pd_with_limit(stock_json, limit)
 
-    avg_pred, stock_history = predict_stock_with_multiple_regressors(df, no_of_days_to_predict)
+
+if __name__ == "__main__":
+    df_to_train = get_history_of_stock("AMZN", 3000, True)
+    df_to_predict = get_history_of_stock("AMZN", 0, False)
+    print("DF TRAIN: ", df_to_train.head())
+    print("DF PRED: ", df_to_predict.head())
+    model_confidence = train_regression_model(df_to_train, 1)
+    print("CONFIDENCE: ", model_confidence)
+
+    avg_pred, stock_history = get_regression_prediction(df_to_predict, 5)
     pred_with_present_day = [stock_history[0]] + avg_pred
+
     print(pred_with_present_day)
     print(compute_vertical_deviation(get_start_and_end_point(pred_with_present_day), pred_with_present_day))
     # deviation = compute_vertical_deviation(get_median_line(stock_with_history), stock_with_history)

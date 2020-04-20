@@ -50,9 +50,12 @@ def get_json_from_url(url_input):
         return json.load(url)
 
 
-def build_url_with_symbol(symbol):
-    return "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=%s" \
-           "&apikey=5ZZAGO8AS4V9XCXD&outputsize=full" % symbol
+def build_url_with_symbol(symbol, fullsize=True):
+    result = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=%s" \
+             "&apikey=5ZZAGO8AS4V9XCXD" % symbol
+    if fullsize:
+        result += "&outputsize=full"
+    return result
 
 
 if __name__ == "__main__":
