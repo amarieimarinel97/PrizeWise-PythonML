@@ -109,7 +109,7 @@ def predict_stock_with_multiple_regressors(df, days):
     # ard_prediction = ard.predict(stock_history_for_prediction[:days])
     # pred_manager.add_prediction(ard_prediction, "ARD Regression", ard_conf)
 
-    stock_history_to_plot = np.flip(pd.to_numeric(df['close'][:days*3], errors='coerce'), 0)
+    stock_history_to_plot = np.flip(pd.to_numeric(df['close'][:days*3+1], errors='coerce'), 0)
 
     average_prediction = pred_manager.get_average_prediction()
 
