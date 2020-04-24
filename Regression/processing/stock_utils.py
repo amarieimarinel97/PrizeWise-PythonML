@@ -4,7 +4,7 @@ import urllib.request
 
 
 def get_json_from_file(filename):
-    with open('stock.json') as json_file:
+    with open(filename) as json_file:
         data = json.load(json_file)
         json_file.close()
         return data
@@ -12,7 +12,9 @@ def get_json_from_file(filename):
 
 def process_json_to_pd(json_data):
     info_list = list()
+    days_list = list()
     for time_reg in json_data['Time Series (Daily)']:
+        days_list.append(time_reg)
         curr_row = list()
         curr_row.append(time_reg)
         for stock_reg in json_data['Time Series (Daily)'][time_reg]:
@@ -20,14 +22,16 @@ def process_json_to_pd(json_data):
         info_list.extend([curr_row])
     index = [i for i in range(0, len(info_list))]
     columns = ['timestamp', 'open', 'high', 'low', 'close', 'vol']
-    return pd.DataFrame(info_list, index, columns)
+    return pd.DataFrame(info_list, index, columns), days_list
 
 
 def process_json_to_pd_with_limit(json_data, limit):
     info_list = list()
     curr_row_counter = 0
+    days_list = list()
     for time_reg in json_data['Time Series (Daily)']:
         curr_row = list()
+        days_list.append(time_reg)
         curr_row.append(time_reg)
         for stock_reg in json_data['Time Series (Daily)'][time_reg]:
             curr_row.append(json_data['Time Series (Daily)'][time_reg][stock_reg])
@@ -37,7 +41,7 @@ def process_json_to_pd_with_limit(json_data, limit):
             break
     index = [i for i in range(0, min(limit, curr_row_counter))]
     columns = ['timestamp', 'open', 'high', 'low', 'close', 'vol']
-    return pd.DataFrame(info_list, index, columns)
+    return pd.DataFrame(info_list, index, columns), days_list
 
 
 def header(msg):
