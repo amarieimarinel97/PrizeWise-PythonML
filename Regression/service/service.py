@@ -32,6 +32,7 @@ class RegressionService(object):
                                                     pred_with_present_day)
         response = {
             "prediction": pred_with_present_day,
+            "history": stock_history.tolist(),
             "changes": regr.compute_percentage_changes(pred_with_present_day),
             "deviation": deviation
         }
@@ -45,12 +46,9 @@ class RegressionService(object):
         print("Received this: ", request_body)
         if isinstance(request_body['text'], list):
             result = []
-            # for pred in sa.model.predict(request_body['text']):
-            #     result.append(float(pred[0]))
             text = request_body['text']
             for ind in tf.range(len(text)):
                 prediction = sa.pad_predict_sample(text[ind], True)
-                # print("Prediction: ", prediction, " | for: ", text[ind])
                 result.append(prediction)
             response = {
                 "sentiment_analysis": result
@@ -60,7 +58,6 @@ class RegressionService(object):
             text = request_body['text'].split("|")
             for ind in tf.range(len(text)):
                 prediction = sa.pad_predict_sample(text[ind], True)
-                # print("Prediction: ", prediction, " | for: ", text[ind])
                 result.append(prediction)
             result = numpy.mean(result)
             response = {
