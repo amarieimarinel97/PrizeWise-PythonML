@@ -5,7 +5,7 @@ from sklearn.linear_model import BayesianRidge
 from sklearn.linear_model import LinearRegression, ARDRegression
 from sklearn.model_selection import train_test_split
 
-import processing.stock_utils as stock_utils
+import processing.utils.stock_utils as stock_utils
 
 no_of_days_to_predict = 5
 
@@ -79,17 +79,17 @@ def predict_stock_with_multiple_regressors(df, days):
     no_of_days_to_predict = days
     pred_manager = Predictions_Manager()
     df = df.drop(['timestamp', 'vol'], 1)
-    df['Prediction'] = df[['close']].shift(-days)
-    X = np.array(df.drop(['Prediction'], 1))
+    df['prediction'] = df[['close']].shift(-days)
+    X = np.array(df.drop(['prediction'], 1))
     X = X[:-days]
 
-    y = np.array(df['Prediction'])
+    y = np.array(df['prediction'])
     y = y[:-days]
 
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.2)
 
-    stock_history_for_prediction = np.array(df.drop(['Prediction'], 1))[:days]
+    stock_history_for_prediction = np.array(df.drop(['prediction'], 1))[:days]
     # stock_utils.header("STOCK HISTORY FOR PRED %s"%stock_history_for_prediction)
 
     lin_reg = LinearRegression()

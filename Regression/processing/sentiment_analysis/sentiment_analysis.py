@@ -108,7 +108,7 @@ def init_module(model_name=None):
     load_encodedimdb_dataset()
     load_imdb_dataset()
     if model_name is None:
-        model_name = "../models/1-lstm_32-nodes_2-dense_1585211592.h5"
+        model_name = "../processing/sentiment_analysis/models/1-lstm_32-nodes_2-dense_1585211592.h5"
     model = tf.keras.models.load_model(model_name)
     print(model.summary())
 

@@ -1,9 +1,8 @@
 import cherrypy
 import tensorflow as tf
-import json
-import processing.regression as regr
-import processing.stock_utils as su
-import processing.sentiment_analysis as sa
+import processing.regression.regression as regr
+import processing.utils.stock_utils as su
+import processing.sentiment_analysis.sentiment_analysis as sa
 import numpy
 
 
@@ -14,19 +13,22 @@ class RegressionService(object):
     @cherrypy.tools.json_in()
     def get_stock_info(self):
         request_body = cherrypy.request.json
-        url = su.build_url_with_symbol(request_body['symbol'])
-        days = 10
+        days = 5
         try:
             if request_body['days'] is not None:
                 days = request_body['days']
         except KeyError:
             print("Number of days not inserted")
 
-        stock_json = su.get_json_from_url(url)
-        df, history_days = su.process_json_to_pd_with_limit(stock_json, 1000)
+        # stock_json = su.get_json_from_url(url)
+        # df, history_days = su.process_json_to_pd_with_limit(stock_json, 1000)
+        #
+        # avg_pred, stock_history = regr.predict_stock(df, days)
 
-        avg_pred, stock_history = regr.predict_stock_with_multiple_regressors(df, days)
-        history_days = history_days[:len(stock_history)]
+        model_info = regr.generate_regression_model(request_body['symbol'])
+        avg_pred, stock_history = regr.predict_stock(model_info, days)
+
+        history_days = model_info["history_days"][:len(stock_history)]
         history_days.reverse()
 
         pred_with_present_day = [stock_history[0]] + avg_pred
@@ -71,6 +73,7 @@ class RegressionService(object):
 
 
 if __name__ == '__main__':
+    regr.init_module(5)
     sa.init_module()
     # cherrypy.server.socket_host = '127.0.0.2'
     cherrypy.server.socket_port = 8081
