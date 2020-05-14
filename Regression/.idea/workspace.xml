@@ -2,14 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d94facc3-764c-47a8-8c9a-f7e322cf670e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/Marinel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/1-lstm_32-nodes_2-dense_1585211592.h5" beforeDir="false" afterPath="$PROJECT_DIR$/processing/sentiment_analysis/models/1-lstm_32-nodes_2-dense_1585211592.h5" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/processing/regression.py" beforeDir="false" afterPath="$PROJECT_DIR$/processing/regression/regression.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/processing/sentiment_analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/processing/sentiment_analysis/sentiment_analysis.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/processing/stock_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/processing/utils/stock_utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/service.py" beforeDir="false" afterPath="$PROJECT_DIR$/service/service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/regression_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/regression_test.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,8 +31,16 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Experimenting/Regression" />
+    <property name="settings.editor.selected.configurable" value="PyConsoleConfigurable.Python Console" />
+  </component>
+  <component name="PyConsoleOptionsProvider">
+    <option name="myPythonConsoleState">
+      <console-settings module-name="Regression" is-module-sdk="true">
+        <option name="myUseModuleSdk" value="true" />
+        <option name="myModuleName" value="Regression" />
+      </console-settings>
+    </option>
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -206,7 +207,11 @@
       <workItem from="1587905921306" duration="865000" />
       <workItem from="1587911785471" duration="2185000" />
       <workItem from="1588325605224" duration="438000" />
-      <workItem from="1588494071624" duration="10271000" />
+      <workItem from="1588494071624" duration="10688000" />
+      <workItem from="1589018495714" duration="2783000" />
+      <workItem from="1589195879708" duration="1899000" />
+      <workItem from="1589198258448" duration="420000" />
+      <workItem from="1589438678963" duration="8200000" />
     </task>
     <servers />
   </component>
@@ -227,71 +232,74 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
-    <state x="603" y="253" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1582899751318">
-      <screen x="0" y="0" width="1676" height="902" />
+    <state x="603" y="265" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1589020601942">
+      <screen x="0" y="0" width="1676" height="943" />
     </state>
     <state x="603" y="253" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1676.902@0.0.1676.902" timestamp="1582899751318" />
+    <state x="603" y="265" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1676.943@0.0.1676.943" timestamp="1589020601942" />
     <state x="410" y="120" width="785" height="595" key="#xdebugger.evaluate" timestamp="1588502660601">
       <screen x="0" y="0" width="1676" height="943" />
     </state>
     <state x="410" y="120" width="785" height="595" key="#xdebugger.evaluate/0.0.1676.943@0.0.1676.943" timestamp="1588502660601" />
-    <state x="617" y="205" key="FileChooserDialogImpl" timestamp="1583314953636">
-      <screen x="0" y="0" width="1676" height="902" />
+    <state x="617" y="214" key="FileChooserDialogImpl" timestamp="1589439969137">
+      <screen x="0" y="0" width="1676" height="943" />
     </state>
     <state x="617" y="205" key="FileChooserDialogImpl/0.0.1676.902@0.0.1676.902" timestamp="1583314953636" />
-    <state width="1632" height="402" key="GridCell.Tab.0.bottom" timestamp="1588504447198">
+    <state x="617" y="214" key="FileChooserDialogImpl/0.0.1676.943@0.0.1676.943" timestamp="1589439969137" />
+    <state width="1632" height="384" key="GridCell.Tab.0.bottom" timestamp="1589468576111">
       <screen x="0" y="0" width="1676" height="943" />
     </state>
     <state width="1632" height="227" key="GridCell.Tab.0.bottom/0.0.1676.902@0.0.1676.902" timestamp="1585323616970" />
-    <state width="1632" height="402" key="GridCell.Tab.0.bottom/0.0.1676.943@0.0.1676.943" timestamp="1588504447198" />
-    <state width="1632" height="402" key="GridCell.Tab.0.center" timestamp="1588504447198">
+    <state width="1632" height="384" key="GridCell.Tab.0.bottom/0.0.1676.943@0.0.1676.943" timestamp="1589468576111" />
+    <state width="1632" height="384" key="GridCell.Tab.0.center" timestamp="1589468576111">
       <screen x="0" y="0" width="1676" height="943" />
     </state>
     <state width="1632" height="227" key="GridCell.Tab.0.center/0.0.1676.902@0.0.1676.902" timestamp="1585323616970" />
-    <state width="1632" height="402" key="GridCell.Tab.0.center/0.0.1676.943@0.0.1676.943" timestamp="1588504447198" />
-    <state width="1632" height="402" key="GridCell.Tab.0.left" timestamp="1588504447198">
+    <state width="1632" height="384" key="GridCell.Tab.0.center/0.0.1676.943@0.0.1676.943" timestamp="1589468576111" />
+    <state width="1632" height="384" key="GridCell.Tab.0.left" timestamp="1589468576111">
       <screen x="0" y="0" width="1676" height="943" />
     </state>
     <state width="1632" height="227" key="GridCell.Tab.0.left/0.0.1676.902@0.0.1676.902" timestamp="1585323616970" />
-    <state width="1632" height="402" key="GridCell.Tab.0.left/0.0.1676.943@0.0.1676.943" timestamp="1588504447198" />
-    <state width="1632" height="402" key="GridCell.Tab.0.right" timestamp="1588504447198">
+    <state width="1632" height="384" key="GridCell.Tab.0.left/0.0.1676.943@0.0.1676.943" timestamp="1589468576111" />
+    <state width="1632" height="384" key="GridCell.Tab.0.right" timestamp="1589468576111">
       <screen x="0" y="0" width="1676" height="943" />
     </state>
     <state width="1632" height="227" key="GridCell.Tab.0.right/0.0.1676.902@0.0.1676.902" timestamp="1585323616970" />
-    <state width="1632" height="402" key="GridCell.Tab.0.right/0.0.1676.943@0.0.1676.943" timestamp="1588504447198" />
-    <state width="1632" height="220" key="GridCell.Tab.1.bottom" timestamp="1588504226160">
+    <state width="1632" height="384" key="GridCell.Tab.0.right/0.0.1676.943@0.0.1676.943" timestamp="1589468576111" />
+    <state width="1632" height="220" key="GridCell.Tab.1.bottom" timestamp="1589198035975">
       <screen x="0" y="0" width="1676" height="943" />
     </state>
     <state width="1632" height="207" key="GridCell.Tab.1.bottom/0.0.1676.902@0.0.1676.902" timestamp="1584022798080" />
-    <state width="1632" height="220" key="GridCell.Tab.1.bottom/0.0.1676.943@0.0.1676.943" timestamp="1588504226160" />
-    <state width="1632" height="220" key="GridCell.Tab.1.center" timestamp="1588504226160">
+    <state width="1632" height="220" key="GridCell.Tab.1.bottom/0.0.1676.943@0.0.1676.943" timestamp="1589198035975" />
+    <state width="1632" height="220" key="GridCell.Tab.1.center" timestamp="1589198035975">
       <screen x="0" y="0" width="1676" height="943" />
     </state>
     <state width="1632" height="207" key="GridCell.Tab.1.center/0.0.1676.902@0.0.1676.902" timestamp="1584022798079" />
-    <state width="1632" height="220" key="GridCell.Tab.1.center/0.0.1676.943@0.0.1676.943" timestamp="1588504226160" />
-    <state width="1632" height="220" key="GridCell.Tab.1.left" timestamp="1588504226160">
+    <state width="1632" height="220" key="GridCell.Tab.1.center/0.0.1676.943@0.0.1676.943" timestamp="1589198035975" />
+    <state width="1632" height="220" key="GridCell.Tab.1.left" timestamp="1589198035975">
       <screen x="0" y="0" width="1676" height="943" />
     </state>
     <state width="1632" height="207" key="GridCell.Tab.1.left/0.0.1676.902@0.0.1676.902" timestamp="1584022798079" />
-    <state width="1632" height="220" key="GridCell.Tab.1.left/0.0.1676.943@0.0.1676.943" timestamp="1588504226160" />
-    <state width="1632" height="220" key="GridCell.Tab.1.right" timestamp="1588504226160">
+    <state width="1632" height="220" key="GridCell.Tab.1.left/0.0.1676.943@0.0.1676.943" timestamp="1589198035975" />
+    <state width="1632" height="220" key="GridCell.Tab.1.right" timestamp="1589198035975">
       <screen x="0" y="0" width="1676" height="943" />
     </state>
     <state width="1632" height="207" key="GridCell.Tab.1.right/0.0.1676.902@0.0.1676.902" timestamp="1584022798080" />
-    <state width="1632" height="220" key="GridCell.Tab.1.right/0.0.1676.943@0.0.1676.943" timestamp="1588504226160" />
-    <state x="346" y="93" key="SettingsEditor" timestamp="1585130982182">
-      <screen x="0" y="0" width="1676" height="902" />
+    <state width="1632" height="220" key="GridCell.Tab.1.right/0.0.1676.943@0.0.1676.943" timestamp="1589198035975" />
+    <state x="346" y="97" key="SettingsEditor" timestamp="1589196548842">
+      <screen x="0" y="0" width="1676" height="943" />
     </state>
     <state x="346" y="93" key="SettingsEditor/0.0.1676.902@0.0.1676.902" timestamp="1585130982182" />
+    <state x="346" y="97" key="SettingsEditor/0.0.1676.943@0.0.1676.943" timestamp="1589196548842" />
     <state x="92" y="92" width="1491" height="758" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1588497230466">
       <screen x="0" y="0" width="1676" height="943" />
     </state>
     <state x="92" y="92" width="1491" height="758" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1676.943@0.0.1676.943" timestamp="1588497230466" />
-    <state x="536" y="50" width="602" height="841" key="find.popup" timestamp="1588501193260">
+    <state x="536" y="50" width="602" height="841" key="find.popup" timestamp="1589456600463">
       <screen x="0" y="0" width="1676" height="943" />
     </state>
     <state x="536" y="48" width="602" height="804" key="find.popup/0.0.1676.902@0.0.1676.902" timestamp="1583918220796" />
-    <state x="536" y="50" width="602" height="841" key="find.popup/0.0.1676.943@0.0.1676.943" timestamp="1588501193260" />
+    <state x="536" y="50" width="602" height="841" key="find.popup/0.0.1676.943@0.0.1676.943" timestamp="1589456600463" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -301,11 +309,6 @@
           <line>238</line>
           <option name="timeStamp" value="11" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/processing/regression/regression.py</url>
-          <line>201</line>
-          <option name="timeStamp" value="13" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
@@ -314,7 +317,7 @@
     <SUITE FILE_PATH="coverage/Regression$regression_test.coverage" NAME="regression_test Coverage Results" MODIFIED="1584090114671" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
     <SUITE FILE_PATH="coverage/Regression$service.coverage" NAME="service Coverage Results" MODIFIED="1585227216627" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service" />
     <SUITE FILE_PATH="coverage/Regression$regression__1_.coverage" NAME="regression (1) Coverage Results" MODIFIED="1588503218398" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/processing/regression" />
-    <SUITE FILE_PATH="coverage/Regression$service__1_.coverage" NAME="service (1) Coverage Results" MODIFIED="1588504447192" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service" />
+    <SUITE FILE_PATH="coverage/Regression$service__1_.coverage" NAME="service (1) Coverage Results" MODIFIED="1589467776294" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service" />
     <SUITE FILE_PATH="coverage/Regression$sentiment_analysis.coverage" NAME="sentiment_analysis Coverage Results" MODIFIED="1585147833933" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/processing" />
     <SUITE FILE_PATH="coverage/Regression$regression_service.coverage" NAME="service Coverage Results" MODIFIED="1585154304232" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service" />
   </component>
