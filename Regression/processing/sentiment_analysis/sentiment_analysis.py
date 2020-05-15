@@ -2,12 +2,10 @@ import time
 
 import tensorflow as tf
 import tensorflow_datasets as tfds
-from tensorflow.keras.callbacks import TensorBoard
-from tensorflow.keras.layers import Dense, Embedding, Bidirectional, Dropout, Conv1D, MaxPooling1D
-from tensorflow.keras.layers import LSTM, Activation, Masking
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.preprocessing import sequence
 import tensorflow_hub as hub
+from tensorflow.keras.callbacks import TensorBoard
+from tensorflow.keras.layers import Activation
+from tensorflow.keras.layers import Dense
 
 BATCH_SIZE = 500
 TRAIN_DATA_SIZE = 10000
@@ -30,7 +28,6 @@ def initialize_gpus():
 
     else:
         print('No GPUs found')
-
 
 def load_encodedimdb_dataset():
     global train_data, validation_data, encoder

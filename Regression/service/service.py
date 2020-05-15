@@ -73,9 +73,9 @@ class RegressionService(object):
 
 
 if __name__ == '__main__':
-    regr.init_module(5)
+    regr.init_module(0)
     sa.init_module()
     # cherrypy.server.socket_host = '127.0.0.2'
-    cherrypy.server.socket_port = 8081
 
-    cherrypy.quickstart(RegressionService())
+    cherrypy.quickstart(RegressionService(), '/', {'global': {'server.socket_host': '0.0.0.0', 'server.socket_port': 8081}})
+
