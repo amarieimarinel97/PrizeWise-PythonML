@@ -15,4 +15,4 @@ CMD python service.py
 
 
 #docker build -t python:tag .
-#docker run -it -p 8081:8081 --name diploma-proj-python --rm python:tag
+#docker run -it --network diploma-proj-net -p 8081:8081 --name diploma-proj-python --rm python:tag
