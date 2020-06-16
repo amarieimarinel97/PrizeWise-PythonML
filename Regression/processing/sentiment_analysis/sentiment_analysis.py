@@ -25,7 +25,6 @@ def initialize_gpus():
             print(len(gpus), "Physical GPUs,", len(logical_gpus), "Logical GPUs")
         except RuntimeError as e:
             print('Error: ', e)
-
     else:
         print('No GPUs found')
 
