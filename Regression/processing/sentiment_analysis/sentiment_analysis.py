@@ -142,6 +142,7 @@ def optimize_model():
                 train_model(dense, dropout, size, True)
 
 
+
 if __name__ == "__main__":
     init_module()
     print(predict_sample("I am pleasantly surprised by the amount of cameras. The bezel is a little too big."))
