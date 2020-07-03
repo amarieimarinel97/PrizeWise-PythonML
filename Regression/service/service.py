@@ -8,7 +8,7 @@ import numpy
 
 class RegressionService(object):
 
-    @cherrypy.expose("stock_regr")
+    @cherrypy.expose("context")
     @cherrypy.tools.json_out()
     @cherrypy.tools.json_in()
     def get_stock_info(self):
@@ -20,11 +20,6 @@ class RegressionService(object):
         except KeyError:
             print("Number of days not inserted")
 
-        # stock_json = su.get_json_from_url(url)
-        # df, history_days = su.process_json_to_pd_with_limit(stock_json, 1000)
-        #
-        # avg_pred, stock_history = regr.predict_stock(df, days)
-
         model_info = regr.generate_regression_model(request_body['symbol'])
         avg_pred, stock_history = regr.predict_stock(model_info, days)
 
@@ -35,15 +30,15 @@ class RegressionService(object):
         deviation = regr.compute_vertical_deviation(regr.get_start_and_end_point(pred_with_present_day),
                                                     pred_with_present_day)
         response = {
-            "prediction": pred_with_present_day,
-            "history": stock_history.tolist(),
-            "changes": regr.compute_percentage_changes(pred_with_present_day),
+            "predictedEvolution": pred_with_present_day,
+            "pastEvolution": stock_history.tolist(),
+            "percentageChanges": regr.compute_percentage_changes(pred_with_present_day),
             "deviation": deviation,
-            "historyDays": history_days
+            "pastDays": history_days
         }
         return response
 
-    @cherrypy.expose("sent_analysis")
+    @cherrypy.expose("textual")
     @cherrypy.tools.json_out()
     @cherrypy.tools.json_in()
     def get_sentiment_analysis(self):
@@ -75,7 +70,5 @@ class RegressionService(object):
 if __name__ == '__main__':
     regr.init_module(0)
     sa.init_module()
-    # cherrypy.server.socket_host = '127.0.0.2'
-
     cherrypy.quickstart(RegressionService(), '/', {'global': {'server.socket_host': '0.0.0.0', 'server.socket_port': 8081}})
 
