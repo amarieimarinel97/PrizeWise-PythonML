@@ -30,14 +30,12 @@ class SentimentAnalyzer:
             print('No GPUs found')
 
     def load_encodedimdb_dataset(self):
-        # global train_data, validation_data, encoder
         dataset, info = tfds.load('imdb_reviews/subwords8k', with_info=True, as_supervised=True)
         self.train_data, self.test_data = dataset['train'], dataset['test']
         self.encoder = info.features['text'].encoder
         return self.train_data, self.validation_data
 
     def load_imdb_dataset(self):
-        # global train_data, validation_data, test_data
         self.train_data, self.validation_data, self.test_data = tfds.load(
             name="imdb_reviews",
             split=('train[:60%]', 'train[60%:]', 'test'),
@@ -45,7 +43,6 @@ class SentimentAnalyzer:
         return self.train_data, self.validation_data, self.test_data
 
     def train_model(self, dense_layer, dropout_layer, layer_size, save=False):
-        # global train_data, validation_data, test_data
         MODEL_NAME = "%d-dense_%d-dropout_%d-size_%d" % (dense_layer, dropout_layer, layer_size, (time.time()))
         tensorboard = TensorBoard(log_dir='tensorboard_logs\\{}'.format(MODEL_NAME))
 
@@ -95,7 +92,6 @@ class SentimentAnalyzer:
         print("max = ", max, "\nmin = ", min)
 
     def init_module(self, model_name=None):
-        # global model
         self.initialize_gpus()
         self.load_encodedimdb_dataset()
         self.load_imdb_dataset()
@@ -110,7 +106,6 @@ class SentimentAnalyzer:
         return vec
 
     def pad_predict_sample(self, sample, pad):
-        # global encoder
         encoded_sample_pred_text = self.encoder.encode(sample)
         if pad:
             encoded_sample_pred_text = self.pad_to_size(encoded_sample_pred_text, 256)
