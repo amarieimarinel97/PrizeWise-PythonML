@@ -9,10 +9,11 @@ from sklearn.model_selection import train_test_split
 
 import processing.utils.stock_utils as stock_utils
 
+
 class Regressor:
     no_of_days_to_predict = 3
     main_stocks = [
-        "AMZN", "MSFT", "GOOG", "DAVA", "AAPL", "FB", "TSLA", "BABA", "NFLX", "DIS"
+        "DIA", "SPY", "QQQ", "AMZN", "MSFT", "GOOG", "DAVA", "AAPL", "FB", "TSLA", "BABA", "NFLX", "DIS"
     ]
     main_stocks_models = {}
 
@@ -79,7 +80,6 @@ class Regressor:
             plt.ylabel('USD')
             # plt.show()
 
-
     def predict_stock(self, model_info, days):
         pred_manager = self.Predictions_Manager()
         df = model_info["df"]
@@ -94,10 +94,9 @@ class Regressor:
 
         return average_prediction, stock_history_to_plot
 
-
     def model_fit_symbol(self, df, no_of_days=None, model_name=None):
         if no_of_days is None:
-            no_of_days = 3
+            no_of_days = self.no_of_days_to_predict
 
         model = None
         models_switcher = {
@@ -106,11 +105,15 @@ class Regressor:
             "ard": ARDRegression(),  # ard regression
         }
         if model_name is None or model_name not in models_switcher:
-            model_name = "lr"
+            model_name = "br"
 
         model = models_switcher[model_name]
 
-        df['prediction'] = df['close']  # .shift(-no_of_days_to_predict) TODO: check again here
+        df['prediction'] = df['close'].shift(-1)  # TODO: check again here
+        with pd.option_context('display.max_rows', None, 'display.max_columns',
+                               None):  # more options can be specified also
+            print(df)
+        df = df[:-1]
         X = np.array(df.drop(['prediction', 'close'], 1))
         y = np.array(df['prediction'])
 
@@ -126,7 +129,6 @@ class Regressor:
                 "df": df,
                 "last_updated": datetime.datetime.now()}
 
-
     def get_vertical_projection_of_point_on_line(self, p1, p2, point):
         yA = p1[1]
         yB = p2[1]
@@ -136,7 +138,6 @@ class Regressor:
         m = (yB - yA) / (xB - xA)
         yC = m * (xC - xA) + yA
         return yC
-
 
     def compute_vertical_deviation(self, line, input_array):
         p1 = line[0]
@@ -150,13 +151,11 @@ class Regressor:
             result.append(percent_deviation)
         return result
 
-
     def compute_percentage_changes(self, input_array):
         result = [0]
         for i in range(1, len(input_array)):
             result.append((input_array[i] - input_array[i - 1]) / input_array[i - 1] * 100)
         return result
-
 
     def get_median_line(self, input_array):
         no_of_elem = len(input_array)
@@ -181,13 +180,10 @@ class Regressor:
                 current_sign_of_elements = sum(deviation)
         return [start_point, end_point]
 
-
     def get_start_and_end_point(self, input_array):
         start_point = [0, input_array[0]]
         end_point = [len(input_array) - 1, input_array[len(input_array) - 1]]
         return [start_point, end_point]
-
-
 
     def init_module(self, stocks_no=None):
         if stocks_no is not None:
@@ -197,7 +193,6 @@ class Regressor:
             print("Generated %d models." % stocks_no)
 
         print("Regression process initialized")
-
 
     def generate_regression_model(self, symbol):
         model_info = None
@@ -213,7 +208,7 @@ class Regressor:
                 must_generate_new_model = True
 
         if must_generate_new_model:
-            url = stock_utils.build_url_with_symbol(symbol)
+            url = stock_utils.build_url_with_symbol(symbol, True)
             stock_json = stock_utils.get_json_from_url(url)
             df, history_days = stock_utils.process_json_to_pd_with_limit(stock_json, 1000)
             df = df.drop(['timestamp'], 1)
@@ -235,7 +230,8 @@ if __name__ == "__main__":
 
     pred_with_present_day = [stock_history[0]] + avg_pred
     print(pred_with_present_day)
-    print(regressor.compute_vertical_deviation(regressor.get_start_and_end_point(pred_with_present_day), pred_with_present_day))
+    print(regressor.compute_vertical_deviation(regressor.get_start_and_end_point(pred_with_present_day),
+                                               pred_with_present_day))
     # deviation = compute_vertical_deviation(get_median_line(stock_with_history), stock_with_history)
     # print(deviation[len(deviation)//2:])
 

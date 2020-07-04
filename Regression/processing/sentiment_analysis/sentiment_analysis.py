@@ -1,4 +1,4 @@
-import time
+import time, string
 
 import tensorflow as tf
 import tensorflow_datasets as tfds
@@ -107,14 +107,17 @@ class SentimentAnalyzer:
 
     def pad_predict_sample(self, sample, pad):
         encoded_sample_pred_text = self.encoder.encode(sample)
+        num_of_words = len(encoded_sample_pred_text)
         if pad:
             encoded_sample_pred_text = self.pad_to_size(encoded_sample_pred_text, 256)
         encoded_sample_pred_text = tf.cast(encoded_sample_pred_text, tf.float32)
         predictions = self.model.predict(tf.expand_dims(encoded_sample_pred_text, 0))
+        if pad:
+            predictions = predictions[0, :num_of_words, 0]
         sum = 0.0
         num = 0.0
-        for x in predictions[0]:
-            sum += float(x[0])
+        for x in predictions:
+            sum += float(x)
             num += 1
         return sum / num
 
