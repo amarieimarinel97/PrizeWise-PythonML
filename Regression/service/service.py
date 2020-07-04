@@ -80,5 +80,6 @@ if __name__ == '__main__':
 
     sentimentAnalyzer = sa.SentimentAnalyzer()
     sentimentAnalyzer.init_module()
+
     cherrypy.quickstart(AlgorithmService(sentimentAnalyzer, regressor), '/', {'global': {'server.socket_host': '0.0.0.0', 'server.socket_port': 8081}})
 

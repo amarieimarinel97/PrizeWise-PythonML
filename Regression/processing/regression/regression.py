@@ -110,9 +110,9 @@ class Regressor:
         model = models_switcher[model_name]
 
         df['prediction'] = df['close'].shift(-1)  # TODO: check again here
-        with pd.option_context('display.max_rows', None, 'display.max_columns',
-                               None):  # more options can be specified also
-            print(df)
+        # with pd.option_context('display.max_rows', None, 'display.max_columns',
+        #                        None):  # more options can be specified also
+            # print(df)
         df = df[:-1]
         X = np.array(df.drop(['prediction', 'close'], 1))
         y = np.array(df['prediction'])
