@@ -1,11 +1,10 @@
-import time, string
+import time
 
 import tensorflow as tf
 import tensorflow_datasets as tfds
 import tensorflow_hub as hub
 from tensorflow.keras.callbacks import TensorBoard
-from tensorflow.keras.layers import Activation
-from tensorflow.keras.layers import Dense
+from tensorflow.keras.layers import Activation, Conv1D, MaxPooling1D, LSTM, Bidirectional, Dropout, Dense
 
 
 class SentimentAnalyzer:
@@ -42,8 +41,8 @@ class SentimentAnalyzer:
             as_supervised=True)
         return self.train_data, self.validation_data, self.test_data
 
-    def train_model(self, dense_layer, dropout_layer, layer_size, save=False):
-        MODEL_NAME = "%d-dense_%d-dropout_%d-size_%d" % (dense_layer, dropout_layer, layer_size, (time.time()))
+    def train_model(self, lstm_layer, dense_layer, layer_size, save=False):
+        MODEL_NAME = "%d-lstm%d-nodes%d-dense_%d" % (lstm_layer, layer_size, dense_layer, (time.time()))
         tensorboard = TensorBoard(log_dir='tensorboard_logs\\{}'.format(MODEL_NAME))
 
         embedding = "https://tfhub.dev/google/tf2-preview/gnews-swivel-20dim/1"
@@ -52,27 +51,51 @@ class SentimentAnalyzer:
 
         model = tf.keras.Sequential()
         model.add(embedding_layer)
+        model.add(Dropout(0.2))
+
+        model.add(Conv1D(filters=layer_size, kernel_size=2, padding="valid", activation="relu", strides=1))
+        model.add(MaxPooling1D(pool_size=2))
+
+        model.add(Bidirectional(LSTM(layer_size // 2, recurrent_dropout=0.2)))
+        model.add(Dropout(0.2))
+
+        for i in range(lstm_layer - 1):
+            model.add(Bidirectional(LSTM(layer_size // 2, recurrent_dropout=0.2)))
+            model.add(Dropout(0.2))
+
         model.add(Dense(layer_size))
-        model.add(Activation('relu'))
+        model.add(Dropout(0.2))
 
         for i in range(dense_layer - 1):
             model.add(Dense(layer_size))
+            model.add(Dropout(0.2))
 
         model.add(Dense(1))
         model.add(Activation('sigmoid'))
         model.summary()
 
         model.compile(optimizer='adam',
-                      loss=tf.keras.losses.BinaryCrossentropy(from_logits=True),
+                      loss=tf.keras.losses.BinaryCrossentropy(),
                       metrics=['accuracy'])
 
-        history = model.fit(self.train_data.shuffle(self.TRAIN_DATA_SIZE).batch(self.BATCH_SIZE),
-                            epochs=20,
-                            validation_data=self.validation_data.batch(self.BATCH_SIZE),
-                            verbose=1, callbacks=[tensorboard])
+        model.fit(self.train_data.shuffle(self.TRAIN_DATA_SIZE).batch(self.BATCH_SIZE),
+                  epochs=20,
+                  validation_data=self.validation_data.batch(self.BATCH_SIZE),
+                  verbose=1, callbacks=[tensorboard])
         if save:
             model.save(MODEL_NAME)
         return model
+
+    def optimize_model(self):
+        self.initialize_gpus()
+        self.load_imdb_dataset()
+        dense_layers = [1, 2, 3]
+        lstm_layers = [1, 2]
+        layer_sizes = [16, 32, 64]
+        for dense in dense_layers:
+            for lstm in lstm_layers:
+                for size in layer_sizes:
+                    self.train_model(lstm, dense, size, True)
 
     def predict_sample(self, sample):
         return self.model.predict([sample])
@@ -120,17 +143,6 @@ class SentimentAnalyzer:
             sum += float(x)
             num += 1
         return sum / num
-
-    def optimize_model(self):
-        self.initialize_gpus()
-        self.load_imdb_dataset()
-        dense_layers = [1, 2, 3]
-        dropout_layers = [0, 1]
-        layer_sizes = [16, 32, 64]
-        for dense in dense_layers:
-            for dropout in dropout_layers:
-                for size in layer_sizes:
-                    self.train_model(dense, dropout, size, True)
 
 
 if __name__ == "__main__":
