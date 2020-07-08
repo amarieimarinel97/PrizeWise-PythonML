@@ -6,6 +6,8 @@ import pandas as pd
 from sklearn.linear_model import BayesianRidge
 from sklearn.linear_model import LinearRegression, ARDRegression
 from sklearn.model_selection import train_test_split
+from sklearn.neural_network import MLPRegressor
+from sklearn.ensemble import RandomForestRegressor
 
 import processing.utils.stock_utils as stock_utils
 
@@ -100,19 +102,18 @@ class Regressor:
 
         model = None
         models_switcher = {
-            "lr": LinearRegression(),  # linear regression
-            "br": BayesianRidge(),  # bayesian ridge
-            "ard": ARDRegression(),  # ard regression
+            "mlpr":  RandomForestRegressor(),  #Logistic regression TODO: better try to analyze performance indicators than historical data (or both)
+            "lr": LinearRegression(),  # Linear regression
+            "br": BayesianRidge(),  # Bayesian ridge
+            "ard": ARDRegression(),  # ARD regression
         }
         if model_name is None or model_name not in models_switcher:
-            model_name = "br"
+            model_name = "mlpr"
 
         model = models_switcher[model_name]
 
-        df['prediction'] = df['close'].shift(-1)  # TODO: check again here
-        # with pd.option_context('display.max_rows', None, 'display.max_columns',
-        #                        None):  # more options can be specified also
-            # print(df)
+        df['prediction'] = df['close'].shift(-1)
+
         df = df[:-1]
         X = np.array(df.drop(['prediction', 'close'], 1))
         y = np.array(df['prediction'])
