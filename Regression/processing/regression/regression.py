@@ -102,13 +102,14 @@ class Regressor:
 
         model = None
         models_switcher = {
-            "mlpr":  RandomForestRegressor(),  #Logistic regression TODO: better try to analyze performance indicators than historical data (or both)
+            "mlpr": RandomForestRegressor(),
+            # Logistic regression TODO: better try to analyze performance indicators than historical data (or both)
             "lr": LinearRegression(),  # Linear regression
             "br": BayesianRidge(),  # Bayesian ridge
             "ard": ARDRegression(),  # ARD regression
         }
         if model_name is None or model_name not in models_switcher:
-            model_name = "mlpr"
+            model_name = "br"
 
         model = models_switcher[model_name]
 
