@@ -112,7 +112,7 @@ class Regressor:
             "ard": ARDRegression(),  # ARD regression
         }
         if model_name is None or model_name not in models_switcher:
-            model_name = "mlpr"
+            model_name = "br"
 
         model = models_switcher[model_name]
 
