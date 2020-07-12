@@ -100,6 +100,27 @@ class SentimentAnalyzer:
     def predict_sample(self, sample):
         return self.model.predict([sample])
 
+    def pad_to_size(self, vec, size):
+        zeros = [0] * (size - len(vec))
+        vec.extend(zeros)
+        return vec
+
+    def pad_predict_sample(self, sample, pad):
+        encoded_sample_pred_text = self.encoder.encode(sample)
+        num_of_words = len(encoded_sample_pred_text)
+        if pad:
+            encoded_sample_pred_text = self.pad_to_size(encoded_sample_pred_text, 256)
+        encoded_sample_pred_text = tf.cast(encoded_sample_pred_text, tf.float32)
+        predictions = self.model.predict(tf.expand_dims(encoded_sample_pred_text, 0))
+        if pad:
+            predictions = predictions[0, :num_of_words, 0]
+        sum = 0.0
+        num = 0.0
+        for x in predictions:
+            sum += float(x)
+            num += 1
+        return sum / num
+
     def get_max_and_min_predictions(self):
         examples, _ = next(iter(self.test_data.batch(25000)))
         min = [999]
@@ -122,27 +143,6 @@ class SentimentAnalyzer:
             model_name = "../processing/sentiment_analysis/models/1-lstm_32-nodes_2-dense_1585211592.h5"
         self.model = tf.keras.models.load_model(model_name)
         print(self.model.summary())
-
-    def pad_to_size(self, vec, size):
-        zeros = [0] * (size - len(vec))
-        vec.extend(zeros)
-        return vec
-
-    def pad_predict_sample(self, sample, pad):
-        encoded_sample_pred_text = self.encoder.encode(sample)
-        num_of_words = len(encoded_sample_pred_text)
-        if pad:
-            encoded_sample_pred_text = self.pad_to_size(encoded_sample_pred_text, 256)
-        encoded_sample_pred_text = tf.cast(encoded_sample_pred_text, tf.float32)
-        predictions = self.model.predict(tf.expand_dims(encoded_sample_pred_text, 0))
-        if pad:
-            predictions = predictions[0, :num_of_words, 0]
-        sum = 0.0
-        num = 0.0
-        for x in predictions:
-            sum += float(x)
-            num += 1
-        return sum / num
 
 
 if __name__ == "__main__":
