@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="d94facc3-764c-47a8-8c9a-f7e322cf670e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/processing/regression/regression.py" beforeDir="false" afterPath="$PROJECT_DIR$/processing/regression/regression.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/processing/sentiment_analysis/sentiment_analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/processing/sentiment_analysis/sentiment_analysis.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -172,7 +171,9 @@
       <workItem from="1594309188916" duration="1210000" />
       <workItem from="1594370452162" duration="2960000" />
       <workItem from="1594452159743" duration="3648000" />
-      <workItem from="1594546334846" duration="1606000" />
+      <workItem from="1594546334846" duration="1864000" />
+      <workItem from="1594733100777" duration="1953000" />
+      <workItem from="1595061167693" duration="3418000" />
     </task>
     <servers />
   </component>
@@ -213,42 +214,42 @@
       <screen x="0" y="0" width="1676" height="943" />
     </state>
     <state x="617" y="214" key="FileChooserDialogImpl/0.0.1676.943@0.0.1676.943" timestamp="1589439969137" />
-    <state width="1632" height="191" key="GridCell.Tab.0.bottom" timestamp="1594567775766">
+    <state width="1632" height="184" key="GridCell.Tab.0.bottom" timestamp="1595061195540">
       <screen x="0" y="0" width="1676" height="943" />
     </state>
-    <state width="1632" height="191" key="GridCell.Tab.0.bottom/0.0.1676.943@0.0.1676.943" timestamp="1594567775766" />
-    <state width="1632" height="191" key="GridCell.Tab.0.center" timestamp="1594567775766">
+    <state width="1632" height="184" key="GridCell.Tab.0.bottom/0.0.1676.943@0.0.1676.943" timestamp="1595061195540" />
+    <state width="1632" height="184" key="GridCell.Tab.0.center" timestamp="1595061195538">
       <screen x="0" y="0" width="1676" height="943" />
     </state>
-    <state width="1632" height="191" key="GridCell.Tab.0.center/0.0.1676.943@0.0.1676.943" timestamp="1594567775766" />
-    <state width="1632" height="191" key="GridCell.Tab.0.left" timestamp="1594567775765">
+    <state width="1632" height="184" key="GridCell.Tab.0.center/0.0.1676.943@0.0.1676.943" timestamp="1595061195538" />
+    <state width="1632" height="184" key="GridCell.Tab.0.left" timestamp="1595061195537">
       <screen x="0" y="0" width="1676" height="943" />
     </state>
-    <state width="1632" height="191" key="GridCell.Tab.0.left/0.0.1676.943@0.0.1676.943" timestamp="1594567775765" />
-    <state width="1632" height="191" key="GridCell.Tab.0.right" timestamp="1594567775766">
+    <state width="1632" height="184" key="GridCell.Tab.0.left/0.0.1676.943@0.0.1676.943" timestamp="1595061195537" />
+    <state width="1632" height="184" key="GridCell.Tab.0.right" timestamp="1595061195540">
       <screen x="0" y="0" width="1676" height="943" />
     </state>
-    <state width="1632" height="191" key="GridCell.Tab.0.right/0.0.1676.943@0.0.1676.943" timestamp="1594567775766" />
-    <state width="1632" height="191" key="GridCell.Tab.1.bottom" timestamp="1594488993274">
+    <state width="1632" height="184" key="GridCell.Tab.0.right/0.0.1676.943@0.0.1676.943" timestamp="1595061195540" />
+    <state width="1632" height="184" key="GridCell.Tab.1.bottom" timestamp="1594574111509">
       <screen x="0" y="0" width="1676" height="943" />
     </state>
-    <state width="1632" height="191" key="GridCell.Tab.1.bottom/0.0.1676.943@0.0.1676.943" timestamp="1594488993274" />
-    <state width="1632" height="191" key="GridCell.Tab.1.center" timestamp="1594488993273">
+    <state width="1632" height="184" key="GridCell.Tab.1.bottom/0.0.1676.943@0.0.1676.943" timestamp="1594574111509" />
+    <state width="1632" height="184" key="GridCell.Tab.1.center" timestamp="1594574111509">
       <screen x="0" y="0" width="1676" height="943" />
     </state>
-    <state width="1632" height="191" key="GridCell.Tab.1.center/0.0.1676.943@0.0.1676.943" timestamp="1594488993273" />
-    <state width="1632" height="191" key="GridCell.Tab.1.left" timestamp="1594488993273">
+    <state width="1632" height="184" key="GridCell.Tab.1.center/0.0.1676.943@0.0.1676.943" timestamp="1594574111509" />
+    <state width="1632" height="184" key="GridCell.Tab.1.left" timestamp="1594574111509">
       <screen x="0" y="0" width="1676" height="943" />
     </state>
-    <state width="1632" height="191" key="GridCell.Tab.1.left/0.0.1676.943@0.0.1676.943" timestamp="1594488993273" />
-    <state width="1632" height="191" key="GridCell.Tab.1.right" timestamp="1594488993274">
+    <state width="1632" height="184" key="GridCell.Tab.1.left/0.0.1676.943@0.0.1676.943" timestamp="1594574111509" />
+    <state width="1632" height="184" key="GridCell.Tab.1.right" timestamp="1594574111509">
       <screen x="0" y="0" width="1676" height="943" />
     </state>
-    <state width="1632" height="191" key="GridCell.Tab.1.right/0.0.1676.943@0.0.1676.943" timestamp="1594488993274" />
-    <state x="346" y="97" key="SettingsEditor" timestamp="1594573852459">
+    <state width="1632" height="184" key="GridCell.Tab.1.right/0.0.1676.943@0.0.1676.943" timestamp="1594574111509" />
+    <state x="346" y="97" key="SettingsEditor" timestamp="1594749020579">
       <screen x="0" y="0" width="1676" height="943" />
     </state>
-    <state x="346" y="97" key="SettingsEditor/0.0.1676.943@0.0.1676.943" timestamp="1594573852459" />
+    <state x="346" y="97" key="SettingsEditor/0.0.1676.943@0.0.1676.943" timestamp="1594749020579" />
     <state x="92" y="92" width="1491" height="758" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1588497230466">
       <screen x="0" y="0" width="1676" height="943" />
     </state>
@@ -273,7 +274,7 @@
     <SUITE FILE_PATH="coverage/Regression$sentiment_analysis__1_.coverage" NAME="sentiment_analysis (1) Coverage Results" MODIFIED="1593781123049" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/processing/sentiment_analysis" />
     <SUITE FILE_PATH="coverage/Regression$regression.coverage" NAME="regression Coverage Results" MODIFIED="1593782040860" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/processing/regression" />
     <SUITE FILE_PATH="coverage/Regression$regression_test.coverage" NAME="regression_test Coverage Results" MODIFIED="1584090114671" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
-    <SUITE FILE_PATH="coverage/Regression$service.coverage" NAME="service Coverage Results" MODIFIED="1594567774431" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service" />
+    <SUITE FILE_PATH="coverage/Regression$service.coverage" NAME="service Coverage Results" MODIFIED="1595061194070" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service" />
     <SUITE FILE_PATH="coverage/Regression$regression__1_.coverage" NAME="regression (1) Coverage Results" MODIFIED="1588503218398" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/processing/regression" />
     <SUITE FILE_PATH="coverage/Regression$service__1_.coverage" NAME="service (1) Coverage Results" MODIFIED="1593781165519" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service" />
     <SUITE FILE_PATH="coverage/Regression$sentiment_analysis.coverage" NAME="sentiment_analysis Coverage Results" MODIFIED="1585147833933" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/processing" />

@@ -150,3 +150,5 @@ if __name__ == "__main__":
     sentimentAnalyzer.init_module()
     print(sentimentAnalyzer.predict_sample(
         "I am pleasantly surprised by the amount of cameras. The bezel is a little too big."))
+
+
