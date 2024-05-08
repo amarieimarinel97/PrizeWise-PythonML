@@ -1,10 +1,12 @@
 import cherrypy
 import tensorflow as tf
+import sys
+import os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import processing.regression.regression as regr
 import processing.utils.stock_utils as su
 import processing.sentiment_analysis.sentiment_analysis as sa
 import numpy
-
 
 class AlgorithmService(object):
 
@@ -54,7 +56,7 @@ class AlgorithmService(object):
         if isinstance(request_body['text'], list):
             result = []
             text = request_body['text']
-            for ind in tf.range(len(text)):
+            for ind in range(len(text)):
                 prediction = self._sentiment_analyzer.pad_predict_sample(text[ind], True)
                 result.append(prediction)
             response = {
@@ -63,7 +65,7 @@ class AlgorithmService(object):
         else:
             result = []
             text = request_body['text'].split("|")
-            for ind in tf.range(len(text)):
+            for ind in range(len(text)):
                 prediction = self._sentiment_analyzer.pad_predict_sample(text[ind], True)
                 result.append(prediction)
             result = numpy.mean(result)
@@ -72,6 +74,21 @@ class AlgorithmService(object):
             }
 
         return response
+
+    @cherrypy.expose("social")
+    @cherrypy.tools.json_out()
+    @cherrypy.tools.json_in()
+    def get_social_network_data(self):
+        request_body = cherrypy.request.json
+        print("Received this: ", request_body)
+        t = twint.Config()
+        t.Search = 'NVDA'
+        t.Limit = 20
+        t.Min_likes = 5
+        t.Min_retweets = 5
+        twint.run.Search(t)
+
+
 
 
 if __name__ == '__main__':

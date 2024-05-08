@@ -4,7 +4,8 @@ import tensorflow as tf
 import tensorflow_datasets as tfds
 import tensorflow_hub as hub
 from tensorflow.keras.callbacks import TensorBoard
-from tensorflow.keras.layers import Activation, Conv1D, MaxPooling1D, LSTM, Bidirectional, Dropout, Dense
+from tensorflow.keras.layers import Activation, Conv1D, MaxPooling1D, LSTM, Dropout, Dense, Bidirectional
+import numpy as np
 
 
 class SentimentAnalyzer:
@@ -37,7 +38,9 @@ class SentimentAnalyzer:
     def load_imdb_dataset(self):
         self.train_data, self.validation_data, self.test_data = tfds.load(
             name="imdb_reviews",
-            split=('train[:60%]', 'train[60%:]', 'test'),
+            # split=('train[:60%]', 'train[60%:]', 'test'),
+            split=[tfds.Split.TRAIN.subsplit(tfds.percent[:60]), tfds.Split.TRAIN.subsplit(tfds.percent[:60]),
+                   tfds.Split.TEST],
             as_supervised=True)
         return self.train_data, self.validation_data, self.test_data
 
@@ -98,7 +101,7 @@ class SentimentAnalyzer:
                     self.train_model(lstm, dense, size, True)
 
     def predict_sample(self, sample):
-        return self.model.predict([sample])
+        return self.model.predict(np.asarray([sample]))
 
     def pad_to_size(self, vec, size):
         zeros = [0] * (size - len(vec))
@@ -108,12 +111,16 @@ class SentimentAnalyzer:
     def pad_predict_sample(self, sample, pad):
         encoded_sample_pred_text = self.encoder.encode(sample)
         num_of_words = len(encoded_sample_pred_text)
+
         if pad:
             encoded_sample_pred_text = self.pad_to_size(encoded_sample_pred_text, 256)
+
         encoded_sample_pred_text = tf.cast(encoded_sample_pred_text, tf.float32)
         predictions = self.model.predict(tf.expand_dims(encoded_sample_pred_text, 0))
+
         if pad:
             predictions = predictions[0, :num_of_words, 0]
+
         sum = 0.0
         num = 0.0
         for x in predictions:
@@ -140,7 +147,7 @@ class SentimentAnalyzer:
         self.load_encodedimdb_dataset()
         self.load_imdb_dataset()
         if model_name is None:
-            model_name = "../processing/sentiment_analysis/models/1-lstm_32-nodes_2-dense_1585211592.h5"
+            model_name = "C:/Personal/Disertation/Dissertation/PrizeWise-PythonML/Regression/processing/sentiment_analysis/models/1-lstm_32-nodes_2-dense_1585211592.h5"
         self.model = tf.keras.models.load_model(model_name)
         print(self.model.summary())
 
@@ -149,6 +156,4 @@ if __name__ == "__main__":
     sentimentAnalyzer = SentimentAnalyzer()
     sentimentAnalyzer.init_module()
     print(sentimentAnalyzer.predict_sample(
-        "I am pleasantly surprised by the amount of cameras. The bezel is a little too big."))
-
-
+        "I am pleasantly surprised by the amount of cameras. The bezel is way too big."))

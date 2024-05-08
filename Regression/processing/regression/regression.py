@@ -213,6 +213,7 @@ class Regressor:
             df, history_days = stock_utils.process_json_to_pd_with_limit(stock_json, 1000)
             df = df.drop(['timestamp'], 1)
             model_info = self.model_fit_symbol(df)
+            # columns = ['timestamp', 'open', 'high', 'low', 'close', 'closed_adjusted', 'vol', 'dividend', 'split']
             model_info["history_days"] = history_days
             self.main_stocks_models[symbol] = model_info
         else:
