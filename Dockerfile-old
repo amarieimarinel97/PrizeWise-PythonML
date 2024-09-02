@@ -1,0 +1,28 @@
+FROM tensorflow/tensorflow:2.5.1
+COPY . .
+
+
+ENV PYTHONPATH=/Regression
+# RUN pip install matplotlib
+# RUN pip install pandas
+# RUN pip install cherrypy
+# RUN pip install scikit-learn
+# RUN pip install tensorflow_datasets
+# RUN pip install tensorflow_hub
+RUN apt update
+RUN apt install wget
+RUN wget https://www.python.org/ftp/python/3.7.0/Python-3.7.0.tgz
+RUN tar xzf Python-3.7.0.tgz
+RUN ./Python-3.7.0/configure --enable-optimizations
+RUN make altinstall
+
+# RUN apt install -y python3.7.0 python3.7.0-dev python3.7.0-venv python3.7.0-distutils
+# RUN python3.7 -m pip install --upgrade pip
+# RUN python3.7 -m pip install -r ./requirements.txt
+
+EXPOSE 8081
+WORKDIR /Regression/service
+# CMD python service.py
+
+#docker build -t python:tag .
+#docker run -it --network diploma-proj-net -p 8081:8081 --name diploma-proj-python --rm python:tag

@@ -147,7 +147,7 @@ class SentimentAnalyzer:
         self.load_encodedimdb_dataset()
         self.load_imdb_dataset()
         if model_name is None:
-            model_name = "C:/Personal/Disertation/Dissertation/PrizeWise-PythonML/Regression/processing/sentiment_analysis/models/1-lstm_32-nodes_2-dense_1585211592.h5"
+            model_name = model_name = "1-lstm_32-nodes_2-dense_1585211592.h5"
         self.model = tf.keras.models.load_model(model_name)
         print(self.model.summary())
 
